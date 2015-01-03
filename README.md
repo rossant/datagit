@@ -24,7 +24,28 @@ With (2), you end up with an awfull mess in your `data` folder with dozens of fi
 
 Can we do better?
 
-## Thoughts about a possible solution
+## Thoughts about possible solutions
 
+### Track files with a VCS
 
+You *could* use git to track your files along with your notebooks, but you'll end up with huge repos and this probably won't scale to big datasets and complex workflows. That's not the right tool for the job.
 
+Maybe there exists a VCS for binary files, but how to integrate it with git?
+
+### Bypassing git
+
+What we want is to save all intermediate datasets along with our git commits. It's essentially a matter of **caching** the output of the cleaning notebooks. Here is a possible solution:
+
+* To generate a new intermediate dataset, instead of doing it manually with e.g. `pd.to_csv(filename)`, you call a special function `datagit.to_csv(data, basename, message)` that does several things:
+  * Save the notebook.
+  * Commit with the given message.
+  * Add a git note to the commit with `datagit <basename>`.
+  * Save the data in a `.datagit` subdirectory with the filename `<basename>_<commithash>.csv`.
+
+* Now, to load an intermediate dataset, in the current notebook or in anywhere else, you call `data = datagit.from_csv(basename)`. This will load a cached version of the dataset. Specifically:
+  * If `.datagit/<basename>_<commithash>.csv` exists, it loads it.
+  * If not, it will move back to the previous commit that has a `datagit something` git note, and try again, until it finds a cached file. If nothing is found, an error is raised.
+
+Why wouldn't `.datagit/<basename>_<commithash>.csv` work in the first place? Because you might use the same git repo for your cleaning and analysis notebooks. So there could be many commits without any new data. What you want is the last generated dataset, which should be found when you go back in the git history. This should work fine even when using branches.
+
+Synchronizing git notes doesn't appear to be easy, but it's possible (although limited). Anyway this solution is essentially useful for local work.
