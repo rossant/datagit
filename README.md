@@ -45,7 +45,7 @@ What we want is to save all intermediate datasets along with our git commits. It
 * To generate a new intermediate dataset, instead of doing it manually with e.g. `pd.to_csv(filename)`, you call a special function `datagit.to_csv(data, basename, message)` that does several things:
   * Save the notebook.
   * Commit with the given message.
-  * Add a git note to the commit with `datagit <basename>`.
+  * Add a [git note](http://git-scm.com/docs/git-notes) (see also [this blog post](http://git-scm.com/blog/2010/08/25/notes.html)) to the commit with `datagit <basename>`.
   * Save the data in a `.datagit` subdirectory with the filename `<basename>_<commithash>.csv`.
 
 * Now, to load an intermediate dataset, in the current notebook or in anywhere else, you call `data = datagit.from_csv(basename)`. This will load a cached version of the dataset. Specifically:
