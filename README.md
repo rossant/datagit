@@ -55,3 +55,11 @@ What we want is to save all intermediate datasets along with our git commits. It
 Why wouldn't `.datagit/<basename>_<commithash>.csv` work in the first place? Because you might use the same git repo for your cleaning and analysis notebooks. So there could be many commits without any new data. What you want is the last generated dataset, which should be found when you go back in the git history. This should work fine even when using branches.
 
 Synchronizing git notes doesn't appear to be easy, but it's possible (although limited). Anyway this solution is essentially useful for local work.
+
+## References
+
+Proposed by [Chris Bourguignat](https://twitter.com/chris_bour):
+
+* https://speakerdeck.com/kriss/lean-machine-learning
+* http://machinelearningmastery.com/how-to-layout-and-manage-your-machine-learning-project/
+* https://www.kaggle.com/c/amazon-employee-access-challenge/forums/t/5283/winning-solution-code-and-methodology/28103#post28103
