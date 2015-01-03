@@ -45,12 +45,12 @@ What we want is to save all intermediate datasets along with our git commits. It
 * To generate a new intermediate dataset, instead of doing it manually with e.g. `pd.to_csv(filename)`, you call a special function `datagit.to_csv(data, basename, message)` that does several things:
   * Save the notebook.
   * Commit with the given message.
-  * Add a [git note](http://git-scm.com/docs/git-notes) (see also [this blog post](http://git-scm.com/blog/2010/08/25/notes.html)) to the commit with `datagit <basename>`.
+  * Add a [git note](http://git-scm.com/docs/git-notes) (see also [this blog post](http://git-scm.com/blog/2010/08/25/notes.html)) to the commit with `datagit <basename>` (actually just `datagit` should be enough).
   * Save the data in a `.datagit` subdirectory with the filename `<basename>_<commithash>.csv`.
 
 * Now, to load an intermediate dataset, in the current notebook or in anywhere else, you call `data = datagit.from_csv(basename)`. This will load a cached version of the dataset. Specifically:
   * If `.datagit/<basename>_<commithash>.csv` exists, it loads it.
-  * If not, it will move back to the previous commit that has a `datagit something` git note, and try again, until it finds a cached file. If nothing is found, an error is raised.
+  * If not, it will move back to the previous commit in the git history that has a `datagit` git note, and try again, until it finds a cached file. If nothing is found, an error is raised.
 
 Why wouldn't `.datagit/<basename>_<commithash>.csv` work in the first place? Because you might use the same git repo for your cleaning and analysis notebooks. So there could be many commits without any new data. What you want is the last generated dataset, which should be found when you go back in the git history. This should work fine even when using branches.
 
