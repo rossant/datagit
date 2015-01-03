@@ -38,7 +38,7 @@ Maybe there exists a VCS for binary files, but how to integrate it with git?
 
 [?](https://git-annex.branchable.com/)
 
-### Bypassing git
+### Proposed solution
 
 What we want is to save all intermediate datasets along with our git commits. It's essentially a matter of **caching** the output of the cleaning notebooks. Here is a possible solution:
 
