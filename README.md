@@ -34,6 +34,10 @@ You *could* use git to track your files along with your notebooks, but you'll en
 
 Maybe there exists a VCS for binary files, but how to integrate it with git?
 
+### Using git annex?
+
+[?](https://git-annex.branchable.com/)
+
 ### Bypassing git
 
 What we want is to save all intermediate datasets along with our git commits. It's essentially a matter of **caching** the output of the cleaning notebooks. Here is a possible solution:
